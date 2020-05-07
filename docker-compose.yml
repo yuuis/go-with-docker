@@ -1,7 +1,7 @@
 version: '3'
 services:
-  cat:
-    build: .
+  app:
+    build: ./app
     environment:
       MYSQL_USER: root
       MYSQL_PASSWORD: root

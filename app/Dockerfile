@@ -1,6 +1,10 @@
-FROM golang:latest
+FROM golang:alpine AS build-container
+ADD . /work
+WORKDIR /work
+ENV GO111MODULE=on
+RUN apk --update add --no-cache git mercurial
+RUN go build
 
-WORKDIR /go
-ADD . /go
-
-CMD ["go", "run", "main.go"]
+FROM alpine:3.9
+COPY --from=build-container /work/go-with-docker /usr/local/bin/go-with-docker
+CMD ["usr/local/bin/go-with-docker"]
